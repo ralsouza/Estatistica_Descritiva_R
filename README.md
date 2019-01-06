@@ -7,5 +7,5 @@ Este é um trabalho que fiz para a disciplina de Estatística na faculdade [Unin
 das tabelas, das medidas de posição, da variância e do desvio padrão;<br/>
 **3.** Apresentar os comandos e os resultados obtidos para a construção
 dos gráficos;<br/>
-**4.** O texto será ser produzido no [R Markdown](https://rmarkdown.rstudio.com). <br/> 
+**4.** Produzir o texto no [R Markdown](https://rmarkdown.rstudio.com). <br/> 
 
