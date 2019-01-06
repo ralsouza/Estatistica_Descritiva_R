@@ -1,0 +1,38 @@
+---
+title: "Estatística Descritiva no Software R"
+author:
+- 'Nome: Rafael Lima de Souza'
+- 'RU: 1237272'
+- 'Polo: Porto Alegre - Centro Histórico'
+- 'e-mail: ls.rafael@icloud.com'
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  html_document: default
+  pdf_document: default
+lang: pt-br
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introdução Sobre o R
+O R é uma linguagem de programação estatística, trata-se de uma linguagem de programação especializada em computação de dados. Algumas de suas principais características são o seu caráter gratuito e sua disponibilidade para uma gama bastante variada de sistemas operacionais. É também altamente expansível com o uso de pacotes que são bibliotecas para áreas de estudos ou funções específicas. Com o R é possível executar cálculos complexos e ainda gerar uma infinidade de gráficos. 
+
+Ainda é possível contar com um [ambiente de desenvolvimento integrado](https://pt.wikipedia.org/wiki/Ambiente_de_desenvolvimento_integrado), o [RStudio](https://www.rstudio.com), onde é possível gerar relatórios e apresentações com alto nível de qualidade. Inclusive, este trabalho foi totalmente desenvolvido com o editor [R Markdown](https://rmarkdown.rstudio.com). 
+
+O código fonte desde trabalho podem ser encontrado no repositório [Estatística Descritiva com R](https://github.com/ralsouza/Estatistica_Descritiva_R) no [GitHub](https://github.com).
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
