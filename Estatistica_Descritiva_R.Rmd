@@ -54,16 +54,16 @@ kable(mt_acidentes,
            general =  'Autor do portifolio.')
 
 ```
-### Análise dos Dados - Medidas de Tendência Central
+### Análise dos Dados
 Nos cálculos abaixo, usamos as funções nativas do R, que foram desenvolvidas préviamente pelos desenvolvedores.
-Abaixo analisaremos as medidas de tendência central: [Mediana](https://pt.wikipedia.org/wiki/Mediana_(estat%C3%ADstica)), [Média](https://pt.wikipedia.org/wiki/M%C3%A9dia), [Variância](https://pt.wikipedia.org/wiki/Vari%C3%A2ncia) e o [Desvio Padrão](https://pt.wikipedia.org/wiki/Desvio_padr%C3%A3o).
+Abaixo analisaremos as medidas de tendência central conhecidas por  [Mediana](https://pt.wikipedia.org/wiki/Mediana_(estat%C3%ADstica)), [Média](https://pt.wikipedia.org/wiki/M%C3%A9dia) e as medidas de dispersão chamadas de  [Variância](https://pt.wikipedia.org/wiki/Vari%C3%A2ncia) e o [Desvio Padrão](https://pt.wikipedia.org/wiki/Desvio_padr%C3%A3o).
 
 <br>
 
 #### Mediana
-  Mediana é o valor que separa a metade maior e a metade menor de uma [amostra](https://pt.wikipedia.org/wiki/Amostra_(estat%C3%ADstica)), uma [população](https://pt.wikipedia.org/wiki/Popula%C3%A7%C3%A3o_(estat%C3%ADstica)) ou uma [distribuição de probabilidade](https://pt.wikipedia.org/wiki/Distribui%C3%A7%C3%A3o_de_probabilidade). Em termos mais simples, mediana pode ser o valor do meio de um conjunto de dados.
+A mediana de um conjunto de dados é o valor que ocupa a posição central, desde que estejam colocados em ordem crescente ou decrescente, ou seja, em um rol.
 
-A fórmula da Mediana é: $\sum_{k=1}^{N} k^2$
+A fórmula da Mediana é: $Md = \frac{n+1}{2}$, desta forma é possível encontrar a posição da mediana.
 
 No R, a função que calcula a Mediana é chamada de [median](https://www.rdocumentation.org/packages/stats/versions/3.5.2/topics/median), abaixo mostra o nome da coluna calculada após o símbolo #, depois o comando usado para o cálculo e na sequencia ao lado do símbolo ## mostra o resultado calculado.
 
@@ -81,11 +81,11 @@ median(mt_acidentes[,4])
 <br>
 
 #### Média
-Média é definida como o valor que mostra para onde se concentram os dados de uma distribuição como o ponto de equilíbrio das frequências em um [histograma](https://pt.wikipedia.org/wiki/Histograma).
+A média aritimética simples, ou simplesmente média, nada mais é que a soma dos resultados obtidos dividida pela quantidade dos resultados.
 
-A fórmula da Média é: $\sum_{k=1}^{N} k^2$
+A fórmula da Média é: $\ \overline{X} = \frac{\sum{X_i}}{n}$, em que $i$ varia de 1 até $n$.
 
-A função utilizada para calcular a Média, é chamada de [mean](https://www.rdocumentation.org/packages/base/versions/3.5.2/topics/mean).
+A função utilizada para calcular a Média no R, é chamada de [mean](https://www.rdocumentation.org/packages/base/versions/3.5.2/topics/mean).
 
 ```{r media acidentes}
 # Sem Vítimas
@@ -101,11 +101,20 @@ mean(mt_acidentes[,4])
 <br>
 
 #### Variância
+Como a soma dos desvios em relação à média é sempre igual a zero, é possível evitar este fato elevando cada desvio ao quadrado, pois sabemos que o quadrado de qualquer número real é sempre positivo.
+
+Para calcular a variância de uma população, usamos a seguinte fórmula: $S^2=\frac{\sum[(X_i-\ \overline{X})^2.f_i]}{N}$
+
+Quando se trata de calcular uma amostra, a seguinte fórmula deve ser aplicada: $S^2=\frac{\sum[(X_i-\ \overline{X})^2.f_i]}{N-1}$
 
 
 
+#### Desvio Padrão
+O desvio padrão o quanto os dados estão dispersos em torno da média. Um desvio padrão alto, indica que os dados estão espalhados por uma ampla gama de valores. O desvio padrão, nada mais é do que a raíz quadrada da variância.
 
+Sua fórmula para medir a variabilidade dos dados em uma população, é: $S^2=\sqrt{\frac{\sum[(X_i-\ \overline{X})^2.f_i]}{N}}$
 
+E para fazermos a medição em uma amostra, usamos: $S^2=\sqrt{\frac{\sum[(X_i-\ \overline{X})^2.f_i]}{N-1}}$
 
 
 
