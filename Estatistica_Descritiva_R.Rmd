@@ -15,13 +15,17 @@ lang: pt-br
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+```{r bibliotecas, include=FALSE, warning=FALSE}
+library(kableExtra)
+library(knitr)
+```
 
 # Introdução Sobre o R
 O R é uma linguagem de programação estatística, trata-se de uma linguagem de programação especializada em computação de dados. Algumas de suas principais características são o seu caráter gratuito e sua disponibilidade para uma gama bastante variada de sistemas operacionais. É também altamente expansível com o uso de pacotes que são bibliotecas para áreas de estudos ou funções específicas, onde é possível executar cálculos complexos e ainda gerar uma infinidade de gráficos. 
 
 Ainda é possível contar com um [ambiente de desenvolvimento integrado](https://pt.wikipedia.org/wiki/Ambiente_de_desenvolvimento_integrado), o [RStudio](https://www.rstudio.com), onde é possível gerar relatórios e apresentações com alto nível de qualidade. Inclusive, este trabalho foi totalmente desenvolvido com o editor [R Markdown](https://rmarkdown.rstudio.com). 
 
-O código fonte desde trabalho podem ser encontrado no repositório [Estatística Descritiva com R](https://github.com/ralsouza/Estatistica_Descritiva_R) no [GitHub](https://github.com).
+O código fonte desde trabalho podem ser encontrado no repositório [Estatística Descritiva com R](https://github.com/ralsouza/Estatistica_Descritiva_R) no [GitHub](https://github.com) e o trabalho destaca os links que podem ser acessados para o leitor ver os detalhes dos termos usados neste trabalho.
 
 ## Experimento 1 - Acidentes de Trânsito
 A tabela abaixo mostra o número de acidentes de trânsito durante uma semana em uma grande metrópole.
@@ -40,9 +44,7 @@ colnames(mt_acidentes) <- c('Sem Vítimas','Com Ferimentos Graves','Com Feriment
 ### Resultado do Experimento 1
 Como resultado dos comandos acima, obtemos a seguinte tabela com os dados sobre os acidentes ocorridos durante uma semana.
 ```{r tabela acidentes, echo=FALSE, results= 'asis'}
-options(warn = -1)
-library(kableExtra)
-library(knitr)
+
 kable(mt_acidentes,
       align = 'c',
       caption = 'Tabela 1 - Número de Acidentes de Trânsito na Metrópole A') %>%
@@ -51,16 +53,75 @@ kable(mt_acidentes,
   footnote(general_title = 'Fonte:',
            general =  'Autor do portifolio.')
 
-options(warn = 0)
+```
+### Análise dos Dados - Medidas de Tendência Central
+Nos cálculos abaixo, usamos as funções nativas do R, que foram desenvolvidas préviamente pelos desenvolvedores.
+Abaixo analisaremos as medidas de tendência central: [Mediana](https://pt.wikipedia.org/wiki/Mediana_(estat%C3%ADstica)), [Média](https://pt.wikipedia.org/wiki/M%C3%A9dia), [Variância](https://pt.wikipedia.org/wiki/Vari%C3%A2ncia) e o [Desvio Padrão](https://pt.wikipedia.org/wiki/Desvio_padr%C3%A3o).
+
+<br>
+
+#### Mediana
+  Mediana é o valor que separa a metade maior e a metade menor de uma [amostra](https://pt.wikipedia.org/wiki/Amostra_(estat%C3%ADstica)), uma [população](https://pt.wikipedia.org/wiki/Popula%C3%A7%C3%A3o_(estat%C3%ADstica)) ou uma [distribuição de probabilidade](https://pt.wikipedia.org/wiki/Distribui%C3%A7%C3%A3o_de_probabilidade). Em termos mais simples, mediana pode ser o valor do meio de um conjunto de dados.
+
+A fórmula da Mediana é: $\sum_{k=1}^{N} k^2$
+
+No R, a função que calcula a Mediana é chamada de [median](https://www.rdocumentation.org/packages/stats/versions/3.5.2/topics/median), abaixo mostra o nome da coluna calculada após o símbolo #, depois o comando usado para o cálculo e na sequencia ao lado do símbolo ## mostra o resultado calculado.
+
+```{r mediana acidentes}
+# Sem Vítimas
+median(mt_acidentes[,1])
+# Com Ferimentos Graves
+median(mt_acidentes[,2])
+# Com Ferimentos Leves
+median(mt_acidentes[,3])
+# Com Mortos
+median(mt_acidentes[,4])
 ```
 
+<br>
 
+#### Média
+Média é definida como o valor que mostra para onde se concentram os dados de uma distribuição como o ponto de equilíbrio das frequências em um [histograma](https://pt.wikipedia.org/wiki/Histograma).
 
+A fórmula da Média é: $\sum_{k=1}^{N} k^2$
 
+A função utilizada para calcular a Média, é chamada de [mean](https://www.rdocumentation.org/packages/base/versions/3.5.2/topics/mean).
 
-```{r cars}
-summary(cars)
+```{r media acidentes}
+# Sem Vítimas
+mean(mt_acidentes[,1])
+# Com Ferimentos Graves
+mean(mt_acidentes[,2])
+# Com Ferimentos Leves
+mean(mt_acidentes[,3])
+# Com Mortos
+mean(mt_acidentes[,4])
 ```
+
+<br>
+
+#### Variância
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Including Plots
 
