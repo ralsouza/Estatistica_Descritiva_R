@@ -18,6 +18,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r bibliotecas, include=FALSE, warning=FALSE}
 library(kableExtra)
 library(knitr)
+library(ggplot2)
 ```
 
 # Introdução Sobre o R
@@ -26,6 +27,54 @@ O R é uma linguagem de programação estatística, trata-se de uma linguagem de
 Ainda é possível contar com um [ambiente de desenvolvimento integrado](https://pt.wikipedia.org/wiki/Ambiente_de_desenvolvimento_integrado), o [RStudio](https://www.rstudio.com), onde é possível gerar relatórios e apresentações com alto nível de qualidade. Inclusive, este trabalho foi totalmente desenvolvido com o editor [R Markdown](https://rmarkdown.rstudio.com). 
 
 O código fonte desde trabalho podem ser encontrado no repositório [Estatística Descritiva com R](https://github.com/ralsouza/Estatistica_Descritiva_R) no [GitHub](https://github.com) e o trabalho destaca os links que podem ser acessados para o leitor ver os detalhes dos termos usados neste trabalho.
+
+<br>
+
+### Medição dos Dados
+Nos cálculos abaixo, usamos as funções nativas do R, que foram desenvolvidas préviamente pelos desenvolvedores.
+Abaixo analisaremos as medidas de tendência central conhecidas por  [Mediana](https://pt.wikipedia.org/wiki/Mediana_(estat%C3%ADstica)), [Média](https://pt.wikipedia.org/wiki/M%C3%A9dia) e as medidas de dispersão chamadas de  [Variância](https://pt.wikipedia.org/wiki/Vari%C3%A2ncia) e o [Desvio Padrão](https://pt.wikipedia.org/wiki/Desvio_padr%C3%A3o).
+
+<br>
+
+#### Mediana
+A mediana de um conjunto de dados é o valor que ocupa a posição central, desde que estejam colocados em ordem crescente ou decrescente, ou seja, em um rol.
+
+A fórmula da Mediana é: $Md = \frac{n+1}{2}$, desta forma é possível encontrar a posição da mediana.
+
+No R, a função que calcula a Mediana é chamada de [median](https://www.rdocumentation.org/packages/stats/versions/3.5.2/topics/median), abaixo mostra o nome da coluna calculada após o símbolo #, depois o comando usado para o cálculo e na sequencia ao lado do símbolo ## mostra o resultado calculado.
+
+<br>
+
+#### Média
+A média aritimética simples, ou simplesmente média, nada mais é que a soma dos resultados obtidos dividida pela quantidade dos resultados.
+
+A fórmula da Média é: $\ \overline{X} = \frac{\sum{X_i}}{n}$, em que $i$ varia de 1 até $n$.
+
+A função utilizada para calcular a Média no R, é chamada de [mean](https://www.rdocumentation.org/packages/base/versions/3.5.2/topics/mean).
+
+<br>
+
+#### Variância
+Como a soma dos desvios em relação à média é sempre igual a zero, é possível evitar este fato elevando cada desvio ao quadrado, pois sabemos que o quadrado de qualquer número real é sempre positivo.
+
+Para calcular a variância de uma população, usamos a seguinte fórmula: $S^2=\frac{\sum[(X_i-\ \overline{X})^2.f_i]}{N}$
+
+Quando se trata de calcular uma amostra, a seguinte fórmula deve ser aplicada: $S^2=\frac{\sum[(X_i-\ \overline{X})^2.f_i]}{N-1}$
+
+A função utilizada para calcular a Variância no R, é chamada de [var](https://www.rdocumentation.org/packages/cmvnorm/versions/1.0-5/topics/var).
+
+<br>
+
+#### Desvio Padrão
+O desvio padrão o quanto os dados estão dispersos em torno da média. Um desvio padrão alto, indica que os dados estão espalhados por uma ampla gama de valores. O desvio padrão, nada mais é do que a raíz quadrada da variância.
+
+Sua fórmula para medir a variabilidade dos dados em uma população, é: $S^2=\sqrt{\frac{\sum[(X_i-\ \overline{X})^2.f_i]}{N}}$
+
+E para fazermos a medição em uma amostra, usamos: $S^2=\sqrt{\frac{\sum[(X_i-\ \overline{X})^2.f_i]}{N-1}}$
+
+A função utilizada para calcular o Desvio Padrão no R, é chamada de [sd](https://www.rdocumentation.org/packages/stats/versions/3.5.2/topics/sd).
+
+<br>
 
 ## Experimento 1 - Acidentes de Trânsito
 A tabela abaixo mostra o número de acidentes de trânsito durante uma semana em uma grande metrópole.
@@ -41,8 +90,13 @@ mt_acidentes <- matrix(c(70,42,45,42,50,61,72,25,15,22,23,24,36,40,
 row.names(mt_acidentes) <- c('Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado')
 colnames(mt_acidentes) <- c('Sem Vítimas','Com Ferimentos Graves','Com Ferimentos Leves','Com Mortos')
 ```
+<br>
+
 ### Resultado do Experimento 1
 Como resultado dos comandos acima, obtemos a seguinte tabela com os dados sobre os acidentes ocorridos durante uma semana.
+
+<br>
+
 ```{r tabela acidentes, echo=FALSE, results= 'asis'}
 
 kable(mt_acidentes,
@@ -54,69 +108,48 @@ kable(mt_acidentes,
            general =  'Autor do portifolio.')
 
 ```
-### Análise dos Dados
-Nos cálculos abaixo, usamos as funções nativas do R, que foram desenvolvidas préviamente pelos desenvolvedores.
-Abaixo analisaremos as medidas de tendência central conhecidas por  [Mediana](https://pt.wikipedia.org/wiki/Mediana_(estat%C3%ADstica)), [Média](https://pt.wikipedia.org/wiki/M%C3%A9dia) e as medidas de dispersão chamadas de  [Variância](https://pt.wikipedia.org/wiki/Vari%C3%A2ncia) e o [Desvio Padrão](https://pt.wikipedia.org/wiki/Desvio_padr%C3%A3o).
 
+
+### Análise dos Dados de Acidentes
+Abaixo segue o código usado para calcular as medidas dos dados dos acidentes.
+
+```{r criacao dataframe acidentes}
+# Comando usado para calcular as medidas e armazenar os dados em um dataframe
+df_ferimentos_graves <-  data.frame(tipo    = c('Sem Vítimas','Com Ferimentos Graves','Com Ferimentos Leves','Com Mortos'),
+                                     media   = apply(mt_acidentes,2, mean),
+                                     des.padr  = apply(mt_acidentes,2, sd),
+                                     var     = apply(mt_acidentes,2, var),
+                                     mediana = apply(mt_acidentes,2, median))
+# Remove os nomes das linhas
+row.names(df_ferimentos_graves) <- NULL
+```
 <br>
 
-#### Mediana
-A mediana de um conjunto de dados é o valor que ocupa a posição central, desde que estejam colocados em ordem crescente ou decrescente, ou seja, em um rol.
+Podemos constatar abaixo, que a média dos feridos gravemente foi de 26 e o desvio padrão foi 8. Este desvio padrão indica que existe boa aderência da variabilidade dos dados com a média.
 
-A fórmula da Mediana é: $Md = \frac{n+1}{2}$, desta forma é possível encontrar a posição da mediana.
+```{r tabela acidentes calculada, echo=FALSE, results= 'asis'}
 
-No R, a função que calcula a Mediana é chamada de [median](https://www.rdocumentation.org/packages/stats/versions/3.5.2/topics/median), abaixo mostra o nome da coluna calculada após o símbolo #, depois o comando usado para o cálculo e na sequencia ao lado do símbolo ## mostra o resultado calculado.
-
-```{r mediana acidentes}
-# Sem Vítimas
-median(mt_acidentes[,1])
-# Com Ferimentos Graves
-median(mt_acidentes[,2])
-# Com Ferimentos Leves
-median(mt_acidentes[,3])
-# Com Mortos
-median(mt_acidentes[,4])
+kable(df_ferimentos_graves,
+      align = 'c',
+      caption = 'Resultados das Medidas Centrais e Dispersão') %>%
+  kable_styling(bootstrap_options = 'striped',
+                full_width = FALSE)
 ```
 
 <br>
 
-#### Média
-A média aritimética simples, ou simplesmente média, nada mais é que a soma dos resultados obtidos dividida pela quantidade dos resultados.
-
-A fórmula da Média é: $\ \overline{X} = \frac{\sum{X_i}}{n}$, em que $i$ varia de 1 até $n$.
-
-A função utilizada para calcular a Média no R, é chamada de [mean](https://www.rdocumentation.org/packages/base/versions/3.5.2/topics/mean).
-
-```{r media acidentes}
-# Sem Vítimas
-mean(mt_acidentes[,1])
-# Com Ferimentos Graves
-mean(mt_acidentes[,2])
-# Com Ferimentos Leves
-mean(mt_acidentes[,3])
-# Com Mortos
-mean(mt_acidentes[,4])
-```
+No seguinte gráfico podemos analisar visualmente os dados de cada tipo de acidente e constatar que realmente o desvio padrão é aderente à média.
 
 <br>
 
-#### Variância
-Como a soma dos desvios em relação à média é sempre igual a zero, é possível evitar este fato elevando cada desvio ao quadrado, pois sabemos que o quadrado de qualquer número real é sempre positivo.
-
-Para calcular a variância de uma população, usamos a seguinte fórmula: $S^2=\frac{\sum[(X_i-\ \overline{X})^2.f_i]}{N}$
-
-Quando se trata de calcular uma amostra, a seguinte fórmula deve ser aplicada: $S^2=\frac{\sum[(X_i-\ \overline{X})^2.f_i]}{N-1}$
-
-
-
-#### Desvio Padrão
-O desvio padrão o quanto os dados estão dispersos em torno da média. Um desvio padrão alto, indica que os dados estão espalhados por uma ampla gama de valores. O desvio padrão, nada mais é do que a raíz quadrada da variância.
-
-Sua fórmula para medir a variabilidade dos dados em uma população, é: $S^2=\sqrt{\frac{\sum[(X_i-\ \overline{X})^2.f_i]}{N}}$
-
-E para fazermos a medição em uma amostra, usamos: $S^2=\sqrt{\frac{\sum[(X_i-\ \overline{X})^2.f_i]}{N-1}}$
-
-
+```{r teste, warning=FALSE, results='hide',message=FALSE, fig.align='center'}
+# Biblioteca GGPLOT2 para visualização de dados
+ggplot(df_ferimentos_graves, aes(x=tipo, y=media)) + 
+  geom_errorbar(aes(ymin=media-des.padr, ymax=media+des.padr), width=.2) +
+  geom_line() +
+  geom_point()
+```
+<br>
 
 
 
@@ -136,8 +169,6 @@ E para fazermos a medição em uma amostra, usamos: $S^2=\sqrt{\frac{\sum[(X_i-\
 
 You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
+
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
