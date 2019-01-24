@@ -151,8 +151,41 @@ ggplot(df_ferimentos_graves, aes(x=tipo, y=media)) +
 ```
 <br>
 
+## Experimento 2 - Gráficos Bioma Pampa
 
+<br>
 
+```{r criacao matriz bioma}
+# Criação de um objeto do tipo matriz(7x4), para armazenar os dados dos acidentes.
+mt_bioma <- matrix(c(176496, 6210, 3340, 1607, 122682, 20974, 7658, 14025,
+                         103835, 0   , 0   , 428 , 10980 , 2033 , 394 , 0    ,
+                         58636 , 6210, 3340, 1179, 21702 , 18940, 7264, 0   ),
+                       nrow = 8,
+                       ncol = 3)
+
+# Nomeando os nomes das variáveis e observações. 
+row.names(mt_bioma) <- c('Área Total',
+                             'Floresta Estacional Semidecidual',
+                             'Floresta Estacional Decidual',
+                             'Savana Estépica',
+                             'Estepe',
+                             'Formações pioneiras',
+                             'Contatos entre tipos de vegetação',
+                             'Superfície com água')
+colnames(mt_bioma) <- c('Total do bioma (Km²)','Área remanescente (Km²)','Área Antroponizada (Km²)')
+```
+
+<br>
+
+```{r tabela bioma, echo=FALSE, results= 'asis'}
+kable(mt_bioma,
+      align = 'c',
+      caption = 'Tabela 2 - Áreas Remanescentes e Áreas Antropizadas, no bioma pampa, segundo os tipos de vegetação') %>%
+  kable_styling(bootstrap_options = 'striped',
+                full_width = FALSE) %>%
+  footnote(general_title = 'Fonte:',
+           general =  'FIGUEIREDO, 2016')
+```
 
 
 
