@@ -1,0 +1,414 @@
+\documentclass[portuguese,]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Estatística Descritiva no Software R},
+            pdfauthor={Nome: Rafael Lima de Souza; RU: 1237272; Polo: Porto Alegre - Centro Histórico; e-mail: ls.rafael@icloud.com},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[shorthands=off,main=portuguese]{babel}
+\else
+  \usepackage{polyglossia}
+  \setmainlanguage[]{portuguese}
+\fi
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Estatística Descritiva no Software R}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Nome: Rafael Lima de Souza \\ RU: 1237272 \\ Polo: Porto Alegre - Centro Histórico \\ e-mail:
+\href{mailto:ls.rafael@icloud.com}{\nolinkurl{ls.rafael@icloud.com}}}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{25 janeiro 2019}
+
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+
+\begin{document}
+\maketitle
+
+\section{Introdução Sobre o R}\label{introducao-sobre-o-r}
+
+O R é uma linguagem de programação estatística, trata-se de uma
+linguagem de programação especializada em computação de dados. Algumas
+de suas principais características são o seu caráter gratuito e sua
+disponibilidade para uma gama bastante variada de sistemas operacionais.
+É também altamente expansível com o uso de pacotes que são bibliotecas
+para áreas de estudos ou funções específicas, onde é possível executar
+cálculos complexos e ainda gerar uma infinidade de gráficos.
+
+Ainda é possível contar com um
+\href{https://pt.wikipedia.org/wiki/Ambiente_de_desenvolvimento_integrado}{ambiente
+de desenvolvimento integrado}, o
+\href{https://www.rstudio.com}{RStudio}, onde é possível gerar
+relatórios e apresentações com alto nível de qualidade. Inclusive, este
+trabalho foi totalmente desenvolvido com o editor
+\href{https://rmarkdown.rstudio.com}{R Markdown}.
+
+O código fonte desde trabalho podem ser encontrado no repositório
+\href{https://github.com/ralsouza/Estatistica_Descritiva_R}{Estatística
+Descritiva com R} no \href{https://github.com}{GitHub} e o trabalho
+destaca os links que podem ser acessados para o leitor ver os detalhes
+dos termos usados neste trabalho.
+
+\subsubsection{Medição dos Dados}\label{medicao-dos-dados}
+
+Para os cálculos deste relatório, usamos as funções nativas do R, que
+foram desenvolvidas préviamente pelos desenvolvedores. Abaixo
+analisaremos as medidas de tendência central conhecidas por
+\href{https://pt.wikipedia.org/wiki/Mediana_(estat\%C3\%ADstica)}{Mediana},
+\href{https://pt.wikipedia.org/wiki/M\%C3\%A9dia}{Média} e as medidas de
+dispersão chamadas de
+\href{https://pt.wikipedia.org/wiki/Vari\%C3\%A2ncia}{Variância} e o
+\href{https://pt.wikipedia.org/wiki/Desvio_padr\%C3\%A3o}{Desvio
+Padrão}.
+
+\paragraph{Mediana}\label{mediana}
+
+A mediana de um conjunto de dados é o valor que ocupa a posição central,
+desde que estejam colocados em ordem crescente ou decrescente, ou seja,
+em um rol.
+
+A fórmula da Mediana é: \(Md = \frac{n+1}{2}\), desta forma é possível
+encontrar a posição da mediana.
+
+No R, a função que calcula a Mediana é chamada de
+\href{https://www.rdocumentation.org/packages/stats/versions/3.5.2/topics/median}{median},
+abaixo mostra o nome da coluna calculada após o símbolo \#, depois o
+comando usado para o cálculo e na sequencia ao lado do símbolo \#\#
+mostra o resultado calculado.
+
+\paragraph{Média}\label{media}
+
+A média aritimética simples, ou simplesmente média, nada mais é que a
+soma dos resultados obtidos dividida pela quantidade dos resultados.
+
+A fórmula da Média é: \(\ \overline{X} = \frac{\sum{X_i}}{n}\), em que
+\(i\) varia de 1 até \(n\).
+
+A função utilizada para calcular a Média no R, é chamada de
+\href{https://www.rdocumentation.org/packages/base/versions/3.5.2/topics/mean}{mean}.
+
+\paragraph{Variância}\label{variancia}
+
+Como a soma dos desvios em relação à média é sempre igual a zero, é
+possível evitar este fato elevando cada desvio ao quadrado, pois sabemos
+que o quadrado de qualquer número real é sempre positivo.
+
+Para calcular a variância de uma população, usamos a seguinte fórmula:
+\(S^2=\frac{\sum[(X_i-\ \overline{X})^2.f_i]}{N}\)
+
+Quando se trata de calcular uma amostra, a seguinte fórmula deve ser
+aplicada: \(S^2=\frac{\sum[(X_i-\ \overline{X})^2.f_i]}{N-1}\)
+
+A função utilizada para calcular a Variância no R, é chamada de
+\href{https://www.rdocumentation.org/packages/cmvnorm/versions/1.0-5/topics/var}{var}.
+
+\paragraph{Desvio Padrão}\label{desvio-padrao}
+
+O desvio padrão o quanto os dados estão dispersos em torno da média. Um
+desvio padrão alto, indica que os dados estão espalhados por uma ampla
+gama de valores. O desvio padrão, nada mais é do que a raíz quadrada da
+variância.
+
+Sua fórmula para medir a variabilidade dos dados em uma população, é:
+\(S^2=\sqrt{\frac{\sum[(X_i-\ \overline{X})^2.f_i]}{N}}\)
+
+E para fazermos a medição em uma amostra, usamos:
+\(S^2=\sqrt{\frac{\sum[(X_i-\ \overline{X})^2.f_i]}{N-1}}\)
+
+A função utilizada para calcular o Desvio Padrão no R, é chamada de
+\href{https://www.rdocumentation.org/packages/stats/versions/3.5.2/topics/sd}{sd}.
+
+\subsection{Experimento 1 - Acidentes de
+Trânsito}\label{experimento-1---acidentes-de-transito}
+
+A tabela abaixo mostra o número de acidentes de trânsito durante uma
+semana em uma grande metrópole.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Criação de um objeto do tipo matriz(7x4), para armazenar os dados dos acidentes.}
+\NormalTok{mt_acidentes <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{70}\NormalTok{,}\DecValTok{42}\NormalTok{,}\DecValTok{45}\NormalTok{,}\DecValTok{42}\NormalTok{,}\DecValTok{50}\NormalTok{,}\DecValTok{61}\NormalTok{,}\DecValTok{72}\NormalTok{,}\DecValTok{25}\NormalTok{,}\DecValTok{15}\NormalTok{,}\DecValTok{22}\NormalTok{,}\DecValTok{23}\NormalTok{,}\DecValTok{24}\NormalTok{,}\DecValTok{36}\NormalTok{,}\DecValTok{40}\NormalTok{,}
+                         \DecValTok{75}\NormalTok{,}\DecValTok{54}\NormalTok{,}\DecValTok{32}\NormalTok{,}\DecValTok{30}\NormalTok{,}\DecValTok{42}\NormalTok{,}\DecValTok{50}\NormalTok{,}\DecValTok{52}\NormalTok{,}\DecValTok{20}\NormalTok{,}\DecValTok{5}\NormalTok{ ,}\DecValTok{6}\NormalTok{ ,}\DecValTok{5}\NormalTok{ ,}\DecValTok{8}\NormalTok{ ,}\DecValTok{15}\NormalTok{,}\DecValTok{18}\NormalTok{),}
+                       \DataTypeTok{nrow =} \DecValTok{7}\NormalTok{,}
+                       \DataTypeTok{ncol =} \DecValTok{4}\NormalTok{)}
+
+\CommentTok{# Nomeando os nomes das variáveis e observações. }
+\KeywordTok{row.names}\NormalTok{(mt_acidentes) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{'Domingo'}\NormalTok{,}\StringTok{'Segunda'}\NormalTok{,}\StringTok{'Terça'}\NormalTok{,}\StringTok{'Quarta'}\NormalTok{,}\StringTok{'Quinta'}\NormalTok{,}\StringTok{'Sexta'}\NormalTok{,}\StringTok{'Sábado'}\NormalTok{)}
+\KeywordTok{colnames}\NormalTok{(mt_acidentes) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{'Sem Vítimas'}\NormalTok{,}\StringTok{'Com Ferimentos Graves'}\NormalTok{,}\StringTok{'Com Ferimentos Leves'}\NormalTok{,}\StringTok{'Com Mortos'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Resultado do Experimento
+1}\label{resultado-do-experimento-1}
+
+Como resultado dos comandos acima, obtemos a seguinte tabela com os
+dados sobre os acidentes ocorridos durante uma semana.
+
+\begin{table}[t]
+
+\caption{\label{tab:tabela acidentes}Tabela 1 - Número de Acidentes de Trânsito na Metrópole A}
+\centering
+\begin{tabular}{l|c|c|c|c}
+\hline
+  & Sem Vítimas & Com Ferimentos Graves & Com Ferimentos Leves & Com Mortos\\
+\hline
+Domingo & 70 & 25 & 75 & 20\\
+\hline
+Segunda & 42 & 15 & 54 & 5\\
+\hline
+Terça & 45 & 22 & 32 & 6\\
+\hline
+Quarta & 42 & 23 & 30 & 5\\
+\hline
+Quinta & 50 & 24 & 42 & 8\\
+\hline
+Sexta & 61 & 36 & 50 & 15\\
+\hline
+Sábado & 72 & 40 & 52 & 18\\
+\hline
+\multicolumn{5}{l}{\textit{Fonte:}}\\
+\multicolumn{5}{l}{Autor do portifolio.}\\
+\end{tabular}
+\end{table}
+
+\subsubsection{Análise dos Dados de
+Acidentes}\label{analise-dos-dados-de-acidentes}
+
+Abaixo segue o código usado para calcular as medidas dos dados dos
+acidentes.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Comando usado para calcular as medidas e armazenar os dados em um dataframe}
+\NormalTok{df_ferimentos_graves <-}\StringTok{  }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{tipo    =} \KeywordTok{c}\NormalTok{(}\StringTok{'Sem Vítimas'}\NormalTok{,}\StringTok{'Com Ferimentos Graves'}\NormalTok{,}\StringTok{'Com Ferimentos Leves'}\NormalTok{,}\StringTok{'Com Mortos'}\NormalTok{),}
+                                     \DataTypeTok{media   =} \KeywordTok{apply}\NormalTok{(mt_acidentes,}\DecValTok{2}\NormalTok{, mean),}
+                                     \DataTypeTok{des.padr  =} \KeywordTok{apply}\NormalTok{(mt_acidentes,}\DecValTok{2}\NormalTok{, sd),}
+                                     \DataTypeTok{var     =} \KeywordTok{apply}\NormalTok{(mt_acidentes,}\DecValTok{2}\NormalTok{, var),}
+                                     \DataTypeTok{mediana =} \KeywordTok{apply}\NormalTok{(mt_acidentes,}\DecValTok{2}\NormalTok{, median))}
+\CommentTok{# Remove os nomes das linhas}
+\KeywordTok{row.names}\NormalTok{(df_ferimentos_graves) <-}\StringTok{ }\OtherTok{NULL}
+\end{Highlighting}
+\end{Shaded}
+
+Podemos constatar abaixo, que a média dos feridos gravemente foi de 26 e
+o desvio padrão foi 8. Este desvio padrão indica que existe boa
+aderência da variabilidade dos dados com a média.
+
+\begin{table}[t]
+
+\caption{\label{tab:tabela acidentes calculada}Resultados das Medidas Centrais e Dispersão}
+\centering
+\begin{tabular}{c|c|c|c|c}
+\hline
+tipo & media & des.padr & var & mediana\\
+\hline
+Sem Vítimas & 54.57143 & 12.985340 & 168.61905 & 50\\
+\hline
+Com Ferimentos Graves & 26.42857 & 8.618916 & 74.28571 & 24\\
+\hline
+Com Ferimentos Leves & 47.85714 & 15.279928 & 233.47619 & 50\\
+\hline
+Com Mortos & 11.00000 & 6.480741 & 42.00000 & 8\\
+\hline
+\end{tabular}
+\end{table}
+
+No seguinte gráfico podemos analisar visualmente os dados de cada tipo
+de acidente e constatar que o desvio padrão possui relativa aderência à
+média.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Biblioteca GGPLOT2 para visualização de dados}
+\KeywordTok{ggplot}\NormalTok{(df_ferimentos_graves, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{tipo, }\DataTypeTok{y=}\NormalTok{media)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_errorbar}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{ymin=}\NormalTok{media}\OperatorTok{-}\NormalTok{des.padr, }\DataTypeTok{ymax=}\NormalTok{media}\OperatorTok{+}\NormalTok{des.padr), }\DataTypeTok{width=}\NormalTok{.}\DecValTok{2}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics{Estatistica_Descritiva_R_files/figure-latex/teste-1} \end{center}
+
+\subsection{Experimento 2 - Gráficos Bioma
+Pampa}\label{experimento-2---graficos-bioma-pampa}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Criação de um objeto do tipo matriz(7x4), para armazenar os dados dos acidentes.}
+\NormalTok{mt_bioma <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{176496}\NormalTok{, }\DecValTok{6210}\NormalTok{, }\DecValTok{3340}\NormalTok{, }\DecValTok{1607}\NormalTok{, }\DecValTok{122682}\NormalTok{, }\DecValTok{20974}\NormalTok{, }\DecValTok{7658}\NormalTok{, }\DecValTok{14025}\NormalTok{,}
+                         \DecValTok{103835}\NormalTok{, }\DecValTok{0}\NormalTok{   , }\DecValTok{0}\NormalTok{   , }\DecValTok{428}\NormalTok{ , }\DecValTok{10980}\NormalTok{ , }\DecValTok{2033}\NormalTok{ , }\DecValTok{394}\NormalTok{ , }\DecValTok{0}\NormalTok{    ,}
+                         \DecValTok{58636}\NormalTok{ , }\DecValTok{6210}\NormalTok{, }\DecValTok{3340}\NormalTok{, }\DecValTok{1179}\NormalTok{, }\DecValTok{21702}\NormalTok{ , }\DecValTok{18940}\NormalTok{, }\DecValTok{7264}\NormalTok{, }\DecValTok{0}\NormalTok{   ),}
+                       \DataTypeTok{nrow =} \DecValTok{8}\NormalTok{,}
+                       \DataTypeTok{ncol =} \DecValTok{3}\NormalTok{)}
+
+\CommentTok{# Nomeando os nomes das variáveis e observações. }
+\KeywordTok{row.names}\NormalTok{(mt_bioma) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{'Área Total'}\NormalTok{,}
+                             \StringTok{'Floresta Estacional Semidecidual'}\NormalTok{,}
+                             \StringTok{'Floresta Estacional Decidual'}\NormalTok{,}
+                             \StringTok{'Savana Estépica'}\NormalTok{,}
+                             \StringTok{'Estepe'}\NormalTok{,}
+                             \StringTok{'Formações pioneiras'}\NormalTok{,}
+                             \StringTok{'Contatos entre tipos de vegetação'}\NormalTok{,}
+                             \StringTok{'Superfície com água'}\NormalTok{)}
+\KeywordTok{colnames}\NormalTok{(mt_bioma) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{'Total do bioma (Km²)'}\NormalTok{,}\StringTok{'Área remanescente (Km²)'}\NormalTok{,}\StringTok{'Área antroponizada (Km²)'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}[t]
+
+\caption{\label{tab:tabela bioma}Tabela 2 - Áreas Remanescentes e Áreas Antropizadas, no Bioma Pampa, Segundo os Tipos de Vegetação}
+\centering
+\begin{tabular}{l|c|c|c}
+\hline
+  & Total do bioma (Km²) & Área remanescente (Km²) & Área antroponizada (Km²)\\
+\hline
+Área Total & 176496 & 103835 & 58636\\
+\hline
+Floresta Estacional Semidecidual & 6210 & 0 & 6210\\
+\hline
+Floresta Estacional Decidual & 3340 & 0 & 3340\\
+\hline
+Savana Estépica & 1607 & 428 & 1179\\
+\hline
+Estepe & 122682 & 10980 & 21702\\
+\hline
+Formações pioneiras & 20974 & 2033 & 18940\\
+\hline
+Contatos entre tipos de vegetação & 7658 & 394 & 7264\\
+\hline
+Superfície com água & 14025 & 0 & 0\\
+\hline
+\multicolumn{4}{l}{\textit{Fonte:}}\\
+\multicolumn{4}{l}{FIGUEIREDO, 2016}\\
+\end{tabular}
+\end{table}
+
+\paragraph{Apresentação dos Gráficos das Áreas
+Antropizadas}\label{apresentacao-dos-graficos-das-areas-antropizadas}
+
+
+\end{document}

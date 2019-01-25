@@ -8,6 +8,7 @@ author:
 date: "`r format(Sys.time(), '%d %B %Y')`"
 output:
   html_document: default
+  word_document: default
   pdf_document: default
 lang: pt-br
 ---
@@ -31,7 +32,7 @@ O código fonte desde trabalho podem ser encontrado no repositório [Estatístic
 <br>
 
 ### Medição dos Dados
-Nos cálculos abaixo, usamos as funções nativas do R, que foram desenvolvidas préviamente pelos desenvolvedores.
+Para os cálculos deste relatório, usamos as funções nativas do R, que foram desenvolvidas préviamente pelos desenvolvedores.
 Abaixo analisaremos as medidas de tendência central conhecidas por  [Mediana](https://pt.wikipedia.org/wiki/Mediana_(estat%C3%ADstica)), [Média](https://pt.wikipedia.org/wiki/M%C3%A9dia) e as medidas de dispersão chamadas de  [Variância](https://pt.wikipedia.org/wiki/Vari%C3%A2ncia) e o [Desvio Padrão](https://pt.wikipedia.org/wiki/Desvio_padr%C3%A3o).
 
 <br>
@@ -138,7 +139,7 @@ kable(df_ferimentos_graves,
 
 <br>
 
-No seguinte gráfico podemos analisar visualmente os dados de cada tipo de acidente e constatar que realmente o desvio padrão é aderente à média.
+No seguinte gráfico podemos analisar visualmente os dados de cada tipo de acidente e constatar que o desvio padrão possui relativa aderência à média.
 
 <br>
 
@@ -172,7 +173,7 @@ row.names(mt_bioma) <- c('Área Total',
                              'Formações pioneiras',
                              'Contatos entre tipos de vegetação',
                              'Superfície com água')
-colnames(mt_bioma) <- c('Total do bioma (Km²)','Área remanescente (Km²)','Área Antroponizada (Km²)')
+colnames(mt_bioma) <- c('Total do bioma (Km²)','Área remanescente (Km²)','Área antroponizada (Km²)')
 ```
 
 <br>
@@ -180,13 +181,42 @@ colnames(mt_bioma) <- c('Total do bioma (Km²)','Área remanescente (Km²)','Ár
 ```{r tabela bioma, echo=FALSE, results= 'asis'}
 kable(mt_bioma,
       align = 'c',
-      caption = 'Tabela 2 - Áreas Remanescentes e Áreas Antropizadas, no bioma pampa, segundo os tipos de vegetação') %>%
+      caption = 'Tabela 2 - Áreas Remanescentes e Áreas Antropizadas, no Bioma Pampa, Segundo os Tipos de Vegetação') %>%
   kable_styling(bootstrap_options = 'striped',
                 full_width = FALSE) %>%
   footnote(general_title = 'Fonte:',
            general =  'FIGUEIREDO, 2016')
 ```
 
+<br>
+
+#### Apresentação dos Gráficos das Áreas Antropizadas
+Abaixo seguem os gráficos relativos a tabela apresentada anteriormente.
+
+<br>
+
+##### Áreas Totais
+No gráfico que segue, podemos analisar o percentual dos totais do bioma pampa.
+
+```{r grafico setores totais bioma}
+# Nomando os rótulos do gráfico
+labels <- c('Total do Bioma', 'Área Remanescente','Área Antroponizada')
+
+# Cálculo do percentual dos setores
+perc <- round(100*mt_bioma[1,]/sum(mt_bioma[1,]), 1)
+
+# Plot do gráfico
+pie(mt_bioma[1,],
+    labels = perc,
+    main = "Percentual das Áreas Totais",
+    radius = 1,
+    col = rainbow(length(mt_bioma[1,])))
+
+legend("topright", c('Total do Bioma', 'Área Remanescente','Área Antroponizada'), cex = 0.8,
+       fill = rainbow(length(mt_bioma[1,])))
+```
+
+<br>
 
 
 
@@ -198,10 +228,19 @@ kable(mt_bioma,
 
 
 
-## Including Plots
-
-You can also embed plots, for example:
 
 
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+
+
+
+
+
+
+
+
+
+
+
