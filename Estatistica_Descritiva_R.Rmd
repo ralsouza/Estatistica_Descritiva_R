@@ -195,30 +195,40 @@ Abaixo seguem os gráficos relativos a tabela apresentada anteriormente.
 
 <br>
 
-##### Áreas Totais
+##### Percetuais das Áreas Remanescentes e Antroponizadas
 No gráfico que segue, podemos analisar o percentual dos totais do bioma pampa.
 
 ```{r grafico setores totais bioma}
 # Nomando os rótulos do gráfico
-labels <- c('Total do Bioma', 'Área Remanescente','Área Antroponizada')
+labels <- c('Área Remanescente','Área Antroponizada')
 
 # Cálculo do percentual dos setores
-perc <- round(100*mt_bioma[1,]/sum(mt_bioma[1,]), 1)
+perc <- round(100*mt_bioma[1,2:3]/sum(mt_bioma[1,2:3]), 1)
 
 # Plot do gráfico
-pie(mt_bioma[1,],
+pie(mt_bioma[1,2:3],
     labels = perc,
-    main = "Percentual das Áreas Totais",
+    main = 'Percentual de Áreas Remanescentes e Antroponizadas',
     radius = 1,
-    col = rainbow(length(mt_bioma[1,])))
+    col = c('blue','red'))
 
-legend("topright", c('Total do Bioma', 'Área Remanescente','Área Antroponizada'), cex = 0.8,
-       fill = rainbow(length(mt_bioma[1,])))
+# Ajuste das legendas
+legend("topright", c('Área Remanescente','Área Antroponizada'), cex = 0.8,
+       fill = c('blue','red'))
 ```
 
 <br>
 
 
+##### Quantitativos das Áreas Remanescentes e Antroponizadas
+```{r grafico colunas biomas}
+# Criaçãodo Gráfico de colunas
+barplot(t(mt_bioma[2:8,2:3]), col = c('blue','red'))
+
+# Ajustes das legendas
+legend("topright", c('Área Remanescente','Área Antroponizada'), cex = 0.8,
+       fill = c('blue','red'))
+```
 
 
 
