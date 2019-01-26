@@ -220,7 +220,8 @@ legend("topright", c('Área Remanescente','Área Antroponizada'), cex = 0.8,
 <br>
 
 
-##### Quantitativos das Áreas Remanescentes e Antroponizadas
+#### Quantitativos das Áreas Remanescentes e Antroponizadas
+No gráfico seguinte podemos analisar os valores quantitativos das áreas fo bioma pampa.
 ```{r grafico colunas biomas}
 # Criaçãodo Gráfico de colunas
 barplot(t(mt_bioma[2:8,2:3]), col = c('blue','red'))
@@ -229,28 +230,3 @@ barplot(t(mt_bioma[2:8,2:3]), col = c('blue','red'))
 legend("topright", c('Área Remanescente','Área Antroponizada'), cex = 0.8,
        fill = c('blue','red'))
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
