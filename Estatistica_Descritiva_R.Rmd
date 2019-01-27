@@ -159,7 +159,7 @@ ggplot(df_ferimentos_graves, aes(x=tipo, y=media)) +
 ```{r criacao matriz bioma}
 # Criação de um objeto do tipo matriz(7x4), para armazenar os dados dos acidentes.
 mt_bioma <- matrix(c(176496, 6210, 3340, 1607, 122682, 20974, 7658, 14025,
-                         103835, 0   , 0   , 428 , 10980 , 2033 , 394 , 0    ,
+                         13835, 0   , 0   , 428 , 10980 , 2033 , 394 , 0    ,
                          58636 , 6210, 3340, 1179, 21702 , 18940, 7264, 0   ),
                        nrow = 8,
                        ncol = 3)
@@ -196,7 +196,7 @@ Abaixo seguem os gráficos relativos a tabela apresentada anteriormente.
 <br>
 
 ##### Percetuais das Áreas Remanescentes e Antroponizadas
-No gráfico que segue, podemos analisar o percentual dos totais do bioma pampa.
+No gráfico que segue, podemos analisar o percentual dos totais do bioma pampa. A porcão das áreas antroponizadas são superiores às remanescentes.
 
 ```{r grafico setores totais bioma}
 # Nomando os rótulos do gráfico
@@ -221,12 +221,24 @@ legend("topright", c('Área Remanescente','Área Antroponizada'), cex = 0.8,
 
 
 #### Quantitativos das Áreas Remanescentes e Antroponizadas
-No gráfico seguinte podemos analisar os valores quantitativos das áreas fo bioma pampa.
+No gráfico seguinte podemos analisar os valores quantitativos das áreas do bioma pampa. Podemos concluir que analisando pelos tipos de biomas, temos as áreas atroponizadas em maior quantidade.
 ```{r grafico colunas biomas}
+# Ajustes dos rótulos
+par(las=3)
+par(mar=c(12,3,3,1))
+
 # Criaçãodo Gráfico de colunas
-barplot(t(mt_bioma[2:8,2:3]), col = c('blue','red'))
+barplot(t(mt_bioma[2:8,2:3]),
+        col = c('blue','red'),
+        cex.names = 0.8,
+        main = 'Quantitativos de Áreas Remanescentes e Antroponizadas')
 
 # Ajustes das legendas
-legend("topright", c('Área Remanescente','Área Antroponizada'), cex = 0.8,
+legend("topright", c('Área Remanescente','Área Antroponizada'), 
+       cex = 0.8,
        fill = c('blue','red'))
 ```
+
+### Referências
+- Nelson Pereira Castanheira; Estatística Aplicada a Todos os Níveis: 2a Edição 2018;
+- Manual R Project. Disponível em: https://cran.r-project.org/manuals.html Acesso em: 23 de janeiro de 2018. 
